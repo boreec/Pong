@@ -1,8 +1,9 @@
 extern crate sdl2;
-
+use crate::sdl2::gfx::primitives::DrawRenderer;
 use sdl2::pixels::Color;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
+
 
 const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
@@ -49,9 +50,13 @@ fn game_loop(context: &sdl2::Sdl,
             }
         }
         // The rest of the game loop goes here...
-
+        draw_ball(&ball,canvas);
         canvas.present();
     }
+}
+
+fn draw_ball(ball: &Ball, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
+    canvas.circle(ball.pos_x as i16, ball.pos_y as i16, ball.radius as i16, ball.color);
 }
 
 fn initialize_ball() -> Ball {
