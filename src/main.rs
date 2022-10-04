@@ -8,6 +8,13 @@ const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
 const WINDOW_TITLE: &str = "pong";
 
+struct Ball {
+    pos_x: i32,
+    pos_y: i32,
+    radius: i32,
+    color: sdl2::pixels::Color,
+}
+
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
@@ -28,6 +35,8 @@ fn game_loop(context: &sdl2::Sdl,
     canvas.set_draw_color(Color::BLACK);
     canvas.clear();
 
+    let ball: Ball = initialize_ball();
+
     let mut event_pump = context.event_pump().unwrap();
     'running: loop {
         for event in event_pump.poll_iter() {
@@ -43,4 +52,13 @@ fn game_loop(context: &sdl2::Sdl,
 
         canvas.present();
     }
+}
+
+fn initialize_ball() -> Ball {
+    return Ball {
+        pos_x: WINDOW_WIDTH as i32/ 2,
+        pos_y: WINDOW_HEIGHT as i32 / 2,
+        radius: 10,
+        color: Color::WHITE,
+    };
 }
