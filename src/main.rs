@@ -5,6 +5,7 @@ use crate::view::*;
 
 use sdl2::pixels::Color;
 use sdl2::event::Event;
+use sdl2::EventPump;
 use sdl2::keyboard::Keycode;
 
 mod entity;
@@ -43,19 +44,24 @@ fn game_loop(context: &sdl2::Sdl,
 
     let mut event_pump = context.event_pump().unwrap();
     while !gs.is_game_over {
-        for event in event_pump.poll_iter() {
-            match event {
-                Event::Quit {..} |
-                Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
-                    gs.is_game_over = true;
-                },
-                _ => {}
-            }
-        }
+        handle_game_events(&mut gs, &mut event_pump);
+
         gs.ball.update_position();
         draw_ball(&gs.ball, canvas);
         draw_racket(&gs.racket_1, canvas);
         draw_racket(&gs.racket_2, canvas);
         canvas.present();
+    }
+}
+
+fn handle_game_events(gs: &mut GameState, event_pump: &mut EventPump){
+    for event in event_pump.poll_iter() {
+        match event {
+            Event::Quit {..} |
+            Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
+                gs.is_game_over = true;
+            },
+            _ => {}
+        }
     }
 }
