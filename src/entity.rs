@@ -44,7 +44,7 @@ pub fn initialize_game_state() -> GameState {
             Color::WHITE
         ),
         racket_2: initialize_racket(
-            SCREEN_MARGIN,
+            WINDOW_WIDTH as i32 - SCREEN_MARGIN - RACKET_WIDTH as i32,
             (WINDOW_HEIGHT / 2  - RACKET_HEIGHT / 2) as i32,
             RACKET_HEIGHT,
             RACKET_WIDTH,
