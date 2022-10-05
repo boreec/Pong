@@ -20,7 +20,7 @@ const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 10;
 
 const SCREEN_MARGIN: i32 = 10;
 
-const FRAME_DURATION: u32 = 100;
+const FRAME_DURATION: u32 = 50;
 
 struct FrameEvent;
 
@@ -41,8 +41,6 @@ pub fn main() {
 
 fn game_loop(context: &sdl2::Sdl,
              canvas: &mut sdl2::render::Canvas<sdl2::video::Window>) {
-    canvas.set_draw_color(Color::BLACK);
-    canvas.clear();
 
     let mut gs: GameState = initialize_game_state();
     let mut event_pump = context.event_pump().unwrap();
@@ -61,6 +59,10 @@ fn game_loop(context: &sdl2::Sdl,
         handle_game_events(&mut gs, &mut event_pump);
 
         gs.ball.update_position();
+
+        // draw the game
+        canvas.set_draw_color(Color::BLACK);
+        canvas.clear();
         draw_game(&gs, canvas);
         canvas.present();
     }
