@@ -5,6 +5,7 @@ use crate::RACKET_HEIGHT;
 use crate::RACKET_WIDTH;
 
 use sdl2::pixels::Color;
+use vector2d::Vector2D;
 
 pub struct GameState {
     pub ball: Ball,
@@ -18,6 +19,7 @@ pub struct Ball {
     pub pos_y: i32,
     pub radius: i32,
     pub color: sdl2::pixels::Color,
+    pub direction: Vector2D<i32>,
 }
 
 pub struct Racket {
@@ -34,7 +36,8 @@ pub fn initialize_game_state() -> GameState {
             WINDOW_WIDTH as i32 / 2,
             WINDOW_HEIGHT as i32 / 2,
             10,
-            Color::RGB(255,140,0)
+            Vector2D::new(1, 0),
+            Color::RGB(255,140,0),
         ),
         racket_1: initialize_racket(
             SCREEN_MARGIN,
@@ -64,11 +67,12 @@ pub fn initialize_racket(x: i32, y: i32, h: u32, w: u32, c: Color) -> Racket {
     };
 }
 
-pub fn initialize_ball(x: i32, y: i32, r: i32, c: Color) -> Ball {
+pub fn initialize_ball(x: i32, y: i32, r: i32, d: Vector2D<i32>, c: Color) -> Ball {
     return Ball {
         pos_x: x,
         pos_y: y,
         radius: r,
+        direction: d,
         color: c,
     };
 }
