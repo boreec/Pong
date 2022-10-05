@@ -38,6 +38,16 @@ pub struct Racket {
     pub color: sdl2::pixels::Color,
 }
 
+impl Racket {
+    pub fn move_up(&mut self){
+        self.pos_y = self.pos_y - 1;
+    }
+
+    pub fn move_down(&mut self){
+        self.pos_y = self.pos_y + 1;
+    }
+}
+
 pub fn initialize_game_state() -> GameState {
     return GameState {
         ball: initialize_ball(
