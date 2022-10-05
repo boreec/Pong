@@ -39,7 +39,7 @@ fn game_loop(context: &sdl2::Sdl,
     canvas.set_draw_color(Color::BLACK);
     canvas.clear();
 
-    let gs: GameState = initialize_game_state();
+    let mut gs: GameState = initialize_game_state();
 
     let mut event_pump = context.event_pump().unwrap();
     'running: loop {
@@ -52,7 +52,7 @@ fn game_loop(context: &sdl2::Sdl,
                 _ => {}
             }
         }
-
+        gs.ball.update_position();
         draw_ball(&gs.ball, canvas);
         draw_racket(&gs.racket_1, canvas);
         draw_racket(&gs.racket_2, canvas);

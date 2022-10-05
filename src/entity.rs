@@ -22,6 +22,13 @@ pub struct Ball {
     pub direction: Vector2D<i32>,
 }
 
+impl Ball {
+    pub fn update_position(&mut self) {
+        self.pos_x += self.direction.x;
+        self.pos_y += self.direction.y;
+    }
+}
+
 pub struct Racket {
     pub pos_x: i32,
     pub pos_y: i32,
