@@ -60,6 +60,12 @@ fn game_loop(context: &sdl2::Sdl,
 
         gs.ball.update_position();
 
+        
+        if gs.ball.has_collision_with(&gs.racket_1) ||
+            gs.ball.has_collision_with(&gs.racket_2) {
+                
+            }
+        
         // draw the game
         canvas.set_draw_color(Color::BLACK);
         canvas.clear();

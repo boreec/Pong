@@ -17,6 +17,7 @@ pub struct GameState {
     pub is_game_over: bool,
 }
 
+#[derive(Copy, Clone)]
 pub struct Ball {
     pub pos_x: i32,
     pub pos_y: i32,
@@ -30,6 +31,10 @@ impl Ball {
     pub fn update_position(&mut self) {
         self.pos_x = self.pos_x + self.speed * self.direction.x;
         self.pos_y = self.pos_y + self.speed * self.direction.y;
+    }
+
+    pub fn has_collision_with(self, racket: &Racket) -> bool {
+        return false;
     }
 }
 

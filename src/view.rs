@@ -6,7 +6,6 @@ use crate::entity::Racket;
 
 use sdl2::rect::Rect;
 
-
 fn draw_racket(racket: &Racket, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
     canvas.set_draw_color(racket.color);
     let rectangle: Rect = Rect::new(racket.pos_x, racket.pos_y, racket.width, racket.height);
