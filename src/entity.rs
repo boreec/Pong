@@ -44,11 +44,15 @@ pub struct Racket {
 
 impl Racket {
     pub fn move_up(&mut self){
-        self.pos_y = self.pos_y - self.speed;
+        if self.pos_y > 0 {
+            self.pos_y = self.pos_y - self.speed;
+        }
     }
 
     pub fn move_down(&mut self){
-        self.pos_y = self.pos_y + self.speed;
+        if self.pos_y < (WINDOW_HEIGHT - self.height) as i32 {
+            self.pos_y = self.pos_y + self.speed;
+        }
     }
 }
 
