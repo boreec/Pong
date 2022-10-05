@@ -4,6 +4,9 @@ use crate::SCREEN_MARGIN;
 use crate::RACKET_HEIGHT;
 use crate::RACKET_WIDTH;
 
+// Racket's general speed in pixels per frame.
+const RACKET_SPEED: i32 = 10;
+
 use sdl2::pixels::Color;
 use vector2d::Vector2D;
 
@@ -35,16 +38,17 @@ pub struct Racket {
     pub pos_y: i32,
     pub height: u32,
     pub width: u32,
+    pub speed: i32,
     pub color: sdl2::pixels::Color,
 }
 
 impl Racket {
     pub fn move_up(&mut self){
-        self.pos_y = self.pos_y - 1;
+        self.pos_y = self.pos_y - self.speed;
     }
 
     pub fn move_down(&mut self){
-        self.pos_y = self.pos_y + 1;
+        self.pos_y = self.pos_y + self.speed;
     }
 }
 
@@ -63,6 +67,7 @@ pub fn initialize_game_state() -> GameState {
             (WINDOW_HEIGHT / 2  - RACKET_HEIGHT / 2) as i32,
             RACKET_HEIGHT,
             RACKET_WIDTH,
+            RACKET_SPEED,
             Color::WHITE
         ),
         racket_2: initialize_racket(
@@ -70,18 +75,20 @@ pub fn initialize_game_state() -> GameState {
             (WINDOW_HEIGHT / 2  - RACKET_HEIGHT / 2) as i32,
             RACKET_HEIGHT,
             RACKET_WIDTH,
+            RACKET_SPEED,
             Color::WHITE
         ),
         is_game_over: false,
     };
 }
 
-pub fn initialize_racket(x: i32, y: i32, h: u32, w: u32, c: Color) -> Racket {
+pub fn initialize_racket(x: i32, y: i32, h: u32, w: u32, s: i32, c: Color) -> Racket {
     return Racket {
         pos_x: x,
         pos_y: y,
         height: h,
         width: w,
+        speed: s,
         color: c,
     };
 }
