@@ -78,6 +78,12 @@ fn handle_game_events(gs: &mut GameState, event_pump: &mut EventPump){
             Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
                 gs.is_game_over = true;
             },
+            Event::KeyDown { keycode: Some(Keycode::Up), .. } => {
+                gs.racket_1.pos_y -= 1;
+            },
+            Event::KeyDown { keycode: Some(Keycode::Down), .. } => {
+                gs.racket_1.pos_y += 1;
+            },
             _ => {}
         }
     }
