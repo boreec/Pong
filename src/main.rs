@@ -47,9 +47,7 @@ fn game_loop(context: &sdl2::Sdl,
         handle_game_events(&mut gs, &mut event_pump);
 
         gs.ball.update_position();
-        draw_ball(&gs.ball, canvas);
-        draw_racket(&gs.racket_1, canvas);
-        draw_racket(&gs.racket_2, canvas);
+        draw_game(&gs, canvas);
         canvas.present();
     }
 }
