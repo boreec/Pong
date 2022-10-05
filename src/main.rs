@@ -20,6 +20,10 @@ const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 10;
 
 const SCREEN_MARGIN: i32 = 10;
 
+const FRAME_DURATION: u32 = 100;
+
+struct FrameEvent;
+
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
@@ -41,8 +45,18 @@ fn game_loop(context: &sdl2::Sdl,
     canvas.clear();
 
     let mut gs: GameState = initialize_game_state();
-
     let mut event_pump = context.event_pump().unwrap();
+    let ev = context.event().unwrap();
+    ev.register_custom_event::<FrameEvent>().unwrap();
+
+    let timer_subsystem = context.timer().unwrap();
+    let _timer = timer_subsystem.add_timer(
+        FRAME_DURATION,
+        Box::new(|| {
+            ev.push_custom_event(FrameEvent).unwrap();
+            FRAME_DURATION
+        }),
+    );
     while !gs.is_game_over {
         handle_game_events(&mut gs, &mut event_pump);
 
