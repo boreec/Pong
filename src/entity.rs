@@ -33,8 +33,39 @@ impl Ball {
         self.pos_y = self.pos_y + self.speed * self.direction.y;
     }
 
+    pub fn inverse_direction(&mut self){
+        self.direction.x = self.direction.x * -1;
+        self.direction.y = self.direction.y * -1;
+    }
+
+    /*
+    * Algorithm based on the answer of e.James on Stackoverflow.
+    */
     pub fn has_collision_with(self, racket: &Racket) -> bool {
-        return false;
+        let circle_distance_x: u32 = (self.pos_x - racket.pos_x).abs() as u32;
+        let circle_distance_y: u32 = (self.pos_y - racket.pos_y).abs() as u32;
+
+        if circle_distance_x > (racket.width / 2 + self.radius as u32) {
+            return false;
+        }
+
+        if circle_distance_y > (racket.height / 2 + self.radius as u32) {
+            return false;
+        }
+
+        if circle_distance_x <= racket.width / 2 {
+            return true;
+        }
+
+        if circle_distance_y <= racket.height / 2 {
+            return true;
+        }
+
+        let cornerDistance_sq =
+            (circle_distance_x - racket.width / 2)^2 +
+            (circle_distance_y - racket.height / 2)^2;
+
+        return cornerDistance_sq <= (self.radius^2) as u32;
     }
 }
 

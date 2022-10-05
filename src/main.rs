@@ -63,7 +63,8 @@ fn game_loop(context: &sdl2::Sdl,
         
         if gs.ball.has_collision_with(&gs.racket_1) ||
             gs.ball.has_collision_with(&gs.racket_2) {
-                
+                println!("collision occured!!");
+                gs.ball.inverse_direction();
             }
         
         // draw the game
@@ -77,7 +78,7 @@ fn game_loop(context: &sdl2::Sdl,
 fn handle_game_events(gs: &mut GameState, event_pump: &mut EventPump){
     let event = event_pump.wait_event();
     if event.is_user_event() {
-        println!("user event!");
+        //
     }else {
         match event {
             Event::Quit {..} |
