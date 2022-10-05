@@ -67,7 +67,10 @@ fn game_loop(context: &sdl2::Sdl,
 }
 
 fn handle_game_events(gs: &mut GameState, event_pump: &mut EventPump){
-    for event in event_pump.poll_iter() {
+    let event = event_pump.wait_event();
+    if event.is_user_event() {
+        println!("user event!");
+    }else {
         match event {
             Event::Quit {..} |
             Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
