@@ -56,7 +56,10 @@ fn game_loop(context: &sdl2::Sdl,
 }
 
 fn draw_ball(ball: &Ball, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
-    canvas.circle(ball.pos_x as i16, ball.pos_y as i16, ball.radius as i16, ball.color);
+    let r = canvas.filled_circle(ball.pos_x as i16, ball.pos_y as i16, ball.radius as i16, ball.color);
+    if r.is_err() {
+        panic!("ball could not be drawn!");
+    }
 }
 
 fn initialize_ball() -> Ball {
@@ -64,6 +67,6 @@ fn initialize_ball() -> Ball {
         pos_x: WINDOW_WIDTH as i32/ 2,
         pos_y: WINDOW_HEIGHT as i32 / 2,
         radius: 10,
-        color: Color::WHITE,
+        color: Color::RGB(255, 140, 0),
     };
 }
