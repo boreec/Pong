@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 sdl2 = "0.35.2"
+vector2d = "2.2.0"
 
 [features]
 gfx = ["sdl2/gfx"]
