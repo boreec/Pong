@@ -1,5 +1,12 @@
 use sdl2::pixels::Color;
 
+pub struct GameState {
+    ball:Ball,
+    racket_1: Racket,
+    racket_2: Racket,
+    is_game_over: bool,
+}
+
 pub struct Ball {
     pub pos_x: i32,
     pub pos_y: i32,
