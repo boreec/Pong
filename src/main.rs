@@ -39,20 +39,8 @@ fn game_loop(context: &sdl2::Sdl,
     canvas.set_draw_color(Color::BLACK);
     canvas.clear();
 
-    let ball: Ball = initialize_ball(
-        WINDOW_WIDTH as i32 / 2,
-        WINDOW_HEIGHT as i32 / 2,
-        10,
-        Color::RGB(255,140,0)
-    );
-    let r_1: Racket = initialize_racket(
-        SCREEN_MARGIN,
-        (WINDOW_HEIGHT / 2  - RACKET_HEIGHT / 2) as i32,
-        RACKET_HEIGHT,
-        RACKET_WIDTH,
-        Color::WHITE
-    );
-    
+    let gs: GameState = initialize_game_state();
+
     let mut event_pump = context.event_pump().unwrap();
     'running: loop {
         for event in event_pump.poll_iter() {
@@ -65,8 +53,9 @@ fn game_loop(context: &sdl2::Sdl,
             }
         }
 
-        draw_ball(&ball, canvas);
-        draw_racket(&r_1, canvas);
+        draw_ball(&gs.ball, canvas);
+        draw_racket(&gs.racket_1, canvas);
+        draw_racket(&gs.racket_2, canvas);
         canvas.present();
     }
 }
