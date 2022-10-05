@@ -61,11 +61,11 @@ impl Ball {
             return true;
         }
 
-        let cornerDistance_sq =
+        let corner_distance_sq =
             (circle_distance_x - racket.width / 2)^2 +
             (circle_distance_y - racket.height / 2)^2;
 
-        return cornerDistance_sq <= (self.radius^2) as u32;
+        return corner_distance_sq <= (self.radius^2) as u32;
     }
 }
 
