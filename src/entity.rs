@@ -22,20 +22,20 @@ pub struct Ball {
     pub pos_x: i32,
     pub pos_y: i32,
     pub radius: i32,
-    pub direction: Vector2D<i32>,
-    pub speed: i32, // the number of pixels/frame
+    pub direction: Vector2D<f64>,
+    pub speed: f64, // the number of pixels/frame
     pub color: sdl2::pixels::Color,
 }
 
 impl Ball {
     pub fn update_position(&mut self) {
-        self.pos_x = self.pos_x + self.speed * self.direction.x;
-        self.pos_y = self.pos_y + self.speed * self.direction.y;
+        self.pos_x = self.pos_x +(self.speed * self.direction.x) as i32;
+        self.pos_y = self.pos_y + (self.speed * self.direction.y) as i32;
     }
-
+    
     pub fn inverse_direction(&mut self){
-        self.direction.x = self.direction.x * -1;
-        self.direction.y = self.direction.y * -1;
+        self.direction.x = self.direction.x * -1.0;
+        self.direction.y = self.direction.y * -1.0;
     }
 
     /*
@@ -98,8 +98,8 @@ pub fn initialize_game_state() -> GameState {
             WINDOW_WIDTH as i32 / 2,
             WINDOW_HEIGHT as i32 / 2,
             10,
-            Vector2D::new(1, 0),
-            10,
+            Vector2D::new(1.0, 0.0),
+            1.0,
             Color::RGB(255,140,0),
         ),
         racket_1: initialize_racket(
@@ -133,7 +133,7 @@ pub fn initialize_racket(x: i32, y: i32, h: u32, w: u32, s: i32, c: Color) -> Ra
     };
 }
 
-pub fn initialize_ball(x: i32, y: i32, r: i32, d: Vector2D<i32>, s: i32, c: Color) -> Ball {
+pub fn initialize_ball(x: i32, y: i32, r: i32, d: Vector2D<f64>, s: f64, c: Color) -> Ball {
     return Ball {
         pos_x: x,
         pos_y: y,
