@@ -55,35 +55,7 @@ fn game_loop(context: &sdl2::Sdl,
     while !gs.is_game_over {
         handle_game_events(&mut gs, &mut event_pump);
 
-        if gs.ball.has_collision_with(&gs.racket_1) {
-            let cp = gs.ball.collision_point_with(&gs.racket_1);
-            if cp == 0 { gs.ball.direction = Direction::EAST; }
-            else if cp > 0 { gs.ball.direction = Direction::SOUTHEAST; }
-            else {gs.ball.direction = Direction::NORTHEAST; }
-        }
-
-        if gs.ball.has_collision_with(&gs.racket_2) {
-            let cp = gs.ball.collision_point_with(&gs.racket_2);
-            if cp == 0 { gs.ball.direction = Direction::WEST; }
-            else if cp > 0 { gs.ball.direction = Direction::SOUTHWEST; }
-            else { gs.ball.direction = Direction::NORTHWEST; }
-        }
-
-        if gs.ball.has_collision_with_ceiling() {
-            if gs.ball.direction == Direction::NORTHWEST {
-                gs.ball.direction = Direction::SOUTHWEST;
-            }else {
-                gs.ball.direction = Direction::SOUTHEAST;
-            }
-        }
-
-        if gs.ball.has_collision_with_floor() {
-            if gs.ball.direction == Direction::SOUTHWEST {
-                gs.ball.direction = Direction::NORTHWEST;
-            }else {
-                gs.ball.direction = Direction::NORTHEAST;
-            }
-        }
+        handle_collisions(&mut gs);
 
         gs.ball.update_position();
 
@@ -122,6 +94,38 @@ fn handle_game_events(gs: &mut GameState, event_pump: &mut EventPump){
                 gs.racket_1.move_down();
             },
             _ => {}
+        }
+    }
+}
+
+fn handle_collisions(gs: &mut GameState){
+    if gs.ball.has_collision_with(&gs.racket_1) {
+        let cp = gs.ball.collision_point_with(&gs.racket_1);
+        if cp == 0 { gs.ball.direction = Direction::EAST; }
+        else if cp > 0 { gs.ball.direction = Direction::SOUTHEAST; }
+        else {gs.ball.direction = Direction::NORTHEAST; }
+    }
+
+    if gs.ball.has_collision_with(&gs.racket_2) {
+        let cp = gs.ball.collision_point_with(&gs.racket_2);
+        if cp == 0 { gs.ball.direction = Direction::WEST; }
+        else if cp > 0 { gs.ball.direction = Direction::SOUTHWEST; }
+        else { gs.ball.direction = Direction::NORTHWEST; }
+    }
+
+    if gs.ball.has_collision_with_ceiling() {
+        if gs.ball.direction == Direction::NORTHWEST {
+            gs.ball.direction = Direction::SOUTHWEST;
+        }else {
+            gs.ball.direction = Direction::SOUTHEAST;
+        }
+    }
+
+    if gs.ball.has_collision_with_floor() {
+        if gs.ball.direction == Direction::SOUTHWEST {
+            gs.ball.direction = Direction::NORTHWEST;
+        }else {
+            gs.ball.direction = Direction::NORTHEAST;
         }
     }
 }
