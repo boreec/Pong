@@ -47,7 +47,22 @@ impl Ball {
             Direction::SOUTH => { self.pos_y += self.speed; }
             Direction::WEST => { self.pos_x -= self.speed; }
             Direction::EAST => { self.pos_x += self.speed; }
-            _ => {}
+            Direction::NORTHEAST => {
+                self.pos_x += self.speed;
+                self.pos_y -= self.speed;
+            }
+            Direction::NORTHWEST => {
+                self.pos_x -= self.speed;
+                self.pos_y -= self.speed;
+            }
+            Direction::SOUTHEAST => {
+                self.pos_x += self.speed;
+                self.pos_y += self.speed;
+            }
+            Direction::SOUTHWEST => {
+                self.pos_x -= self.speed;
+                self.pos_y += self.speed;
+            }
         }
     }
 
