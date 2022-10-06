@@ -15,9 +15,6 @@ const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
 const WINDOW_TITLE: &str = "pong";
 
-const RACKET_WIDTH: u32 = 10;
-const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 10;
-
 const SCREEN_MARGIN: i32 = 10;
 
 const FRAME_DURATION: u32 = 50;

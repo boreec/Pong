@@ -1,11 +1,12 @@
 use crate::WINDOW_WIDTH;
 use crate::WINDOW_HEIGHT;
 use crate::SCREEN_MARGIN;
-use crate::RACKET_HEIGHT;
-use crate::RACKET_WIDTH;
 
 // Racket's general speed in pixels per frame.
 const RACKET_SPEED: i32 = 10;
+const RACKET_WIDTH: u32 = 10;
+const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 10;
+
 const BALL_SPEED: f64 = 10.0;
 
 use sdl2::pixels::Color;
