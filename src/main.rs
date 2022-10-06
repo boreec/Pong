@@ -57,7 +57,6 @@ fn game_loop(context: &sdl2::Sdl,
 
         if gs.ball.has_collision_with(&gs.racket_1) {
             let cp = gs.ball.collision_point_with(&gs.racket_1);
-            println!("cp: {}", cp);
             if cp == 0 { gs.ball.direction = Direction::EAST; }
             else if cp > 0 { gs.ball.direction = Direction::SOUTHEAST; }
             else {gs.ball.direction = Direction::NORTHEAST; }
@@ -65,12 +64,9 @@ fn game_loop(context: &sdl2::Sdl,
 
         if gs.ball.has_collision_with(&gs.racket_2) {
             let cp = gs.ball.collision_point_with(&gs.racket_2);
-            println!("cp: {}", cp);
-            match cp {
-                0 => { gs.ball.direction = Direction::WEST; }
-                _ => {}
-            }
-
+            if cp == 0 { gs.ball.direction = Direction::WEST; }
+            else if cp > 0 { gs.ball.direction = Direction::SOUTHWEST; }
+            else { gs.ball.direction = Direction::NORTHWEST; }
         }
 
         if gs.ball.has_collision_with_ceiling() {
