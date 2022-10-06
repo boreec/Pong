@@ -74,9 +74,19 @@ fn game_loop(context: &sdl2::Sdl,
         }
 
         if gs.ball.has_collision_with_ceiling() {
+            if gs.ball.direction == Direction::NORTHWEST {
+                gs.ball.direction = Direction::SOUTHWEST;
+            }else {
+                gs.ball.direction = Direction::SOUTHEAST;
+            }
         }
 
         if gs.ball.has_collision_with_floor() {
+            if gs.ball.direction == Direction::SOUTHWEST {
+                gs.ball.direction = Direction::NORTHWEST;
+            }else {
+                gs.ball.direction = Direction::NORTHEAST;
+            }
         }
 
         gs.ball.update_position();

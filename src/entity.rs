@@ -11,7 +11,7 @@ const BALL_SPEED: i32 = 3;
 
 use sdl2::pixels::Color;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Direction {
     NORTH,
     SOUTH,
