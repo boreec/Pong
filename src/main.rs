@@ -61,12 +61,14 @@ fn game_loop(context: &sdl2::Sdl,
         gs.ball.update_position();
 
         if gs.ball.has_collision_with(&gs.racket_1) {
-            println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_1));
+            println!("ball: {}", gs.ball.to_string());
+            //println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_1));
             gs.ball.inverse_direction();
         }
 
         if gs.ball.has_collision_with(&gs.racket_2) {
-            println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_2));
+            //println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_2));
+            println!("ball: {}", gs.ball.to_string());
             gs.ball.inverse_direction();
         }
 

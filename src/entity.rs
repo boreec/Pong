@@ -28,6 +28,20 @@ pub struct Ball {
     pub color: sdl2::pixels::Color,
 }
 
+impl ToString for Ball {
+    fn to_string(&self) -> String {
+        return format!(
+            "({},{}), radius: {}, speed: {}, direction: ({},{})",
+            self.pos_x,
+            self.pos_y,
+            self.radius,
+            self.speed,
+            self.direction.x,
+            self.direction.y
+        );
+    }
+}
+
 impl Ball {
     pub fn update_position(&mut self) {
         self.pos_x = self.pos_x +(self.speed * self.direction.x) as i32;
