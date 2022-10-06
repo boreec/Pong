@@ -5,7 +5,7 @@ use crate::SCREEN_MARGIN;
 // Racket's general speed in pixels per frame.
 const RACKET_SPEED: i32 = 10;
 const RACKET_WIDTH: u32 = 10;
-const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 10;
+const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 8;
 
 const BALL_SPEED: f64 = 10.0;
 
@@ -49,9 +49,15 @@ impl Ball {
         self.pos_y = self.pos_y + (self.speed * self.direction.y) as i32;
     }
 
-    pub fn inverse_direction(&mut self){
+    pub fn inverse_direction(&mut self, angle: f64){
         self.direction.x = self.direction.x * -1.0;
         self.direction.y = self.direction.y * -1.0;
+        if angle >= 0.0 {
+            let old_dx = self.direction.x;
+            let old_dy = self.direction.y;
+            self.direction.x = (old_dx * angle.cos() - old_dy * angle.sin()) * -1.0;
+            self.direction.y = (old_dx * angle.sin() + old_dx * angle.cos()) * -1.0;
+        }
     }
 
     /*
@@ -83,13 +89,17 @@ impl Ball {
 
         return corner_distance_sq <= (self.radius^2) as u32;
     }
-
+    
+    pub fn has_collision_with_ceiling(self) -> bool {
+        return self.pos_y - self.radius <= 0;
+    }
+    
     pub fn get_angle_from_collision_with(self, racket: &Racket) -> f64 {
 
         // distance between the ball and the middle of the racket.
         let d = racket.pos_y + (racket.height / 2) as i32 - self.pos_y;
 
-        return (d as f64 / (racket.height as f64 / 2.0)) * 90.0;
+        return (d as f64 / (racket.height as f64 / 2.0)) * 45.0;
     }
 }
 

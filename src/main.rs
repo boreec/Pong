@@ -58,15 +58,23 @@ fn game_loop(context: &sdl2::Sdl,
         gs.ball.update_position();
 
         if gs.ball.has_collision_with(&gs.racket_1) {
-            println!("ball: {}", gs.ball.to_string());
             //println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_1));
-            gs.ball.inverse_direction();
+            let angle = gs.ball.get_angle_from_collision_with(&gs.racket_1);
+            gs.ball.inverse_direction(angle);
+            println!("ball: {}", gs.ball.to_string());
+
         }
 
         if gs.ball.has_collision_with(&gs.racket_2) {
             //println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_2));
+            let angle = gs.ball.get_angle_from_collision_with(&gs.racket_2);
+            gs.ball.inverse_direction(angle);
             println!("ball: {}", gs.ball.to_string());
-            gs.ball.inverse_direction();
+
+        }
+
+        if gs.ball.has_collision_with_ceiling() {
+            println!("ceiling touched!");
         }
 
         // draw the game
