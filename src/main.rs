@@ -55,27 +55,32 @@ fn game_loop(context: &sdl2::Sdl,
     while !gs.is_game_over {
         handle_game_events(&mut gs, &mut event_pump);
 
-        gs.ball.update_position();
-
         if gs.ball.has_collision_with(&gs.racket_1) {
-            //println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_1));
-            let angle = gs.ball.get_angle_from_collision_with(&gs.racket_1);
-            gs.ball.inverse_direction(angle);
-            println!("ball: {}", gs.ball.to_string());
-
+            let cp = gs.ball.collision_point_with(&gs.racket_1);
+            println!("cp: {}", cp);
+            if cp == 0 { gs.ball.direction = Direction::EAST; }
+            else if cp > 0 { gs.ball.direction = Direction::SOUTHEAST; }
+            else {gs.ball.direction = Direction::NORTHEAST; }
         }
 
         if gs.ball.has_collision_with(&gs.racket_2) {
-            //println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_2));
-            let angle = gs.ball.get_angle_from_collision_with(&gs.racket_2);
-            gs.ball.inverse_direction(angle);
-            println!("ball: {}", gs.ball.to_string());
+            let cp = gs.ball.collision_point_with(&gs.racket_2);
+            println!("cp: {}", cp);
+            match cp {
+                0 => { gs.ball.direction = Direction::WEST; }
+                _ => {}
+            }
 
         }
 
         if gs.ball.has_collision_with_ceiling() {
-            println!("ceiling touched!");
         }
+
+        if gs.ball.has_collision_with_floor() {
+        }
+
+        gs.ball.update_position();
+
 
         // draw the game
         canvas.set_draw_color(Color::BLACK);
