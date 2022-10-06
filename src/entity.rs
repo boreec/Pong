@@ -93,6 +93,10 @@ impl Ball {
     pub fn has_collision_with_ceiling(self) -> bool {
         return self.pos_y - self.radius <= 0;
     }
+
+    pub fn has_collision_with_floor(self) -> bool {
+        return self.pos_y + self.radius >= WINDOW_HEIGHT as i32;
+    }
     
     pub fn get_angle_from_collision_with(self, racket: &Racket) -> f64 {
 
