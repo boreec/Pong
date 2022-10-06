@@ -6,6 +6,7 @@ use crate::RACKET_WIDTH;
 
 // Racket's general speed in pixels per frame.
 const RACKET_SPEED: i32 = 10;
+const BALL_SPEED: f64 = 10.0;
 
 use sdl2::pixels::Color;
 use vector2d::Vector2D;
@@ -32,7 +33,7 @@ impl Ball {
         self.pos_x = self.pos_x +(self.speed * self.direction.x) as i32;
         self.pos_y = self.pos_y + (self.speed * self.direction.y) as i32;
     }
-    
+
     pub fn inverse_direction(&mut self){
         self.direction.x = self.direction.x * -1.0;
         self.direction.y = self.direction.y * -1.0;
@@ -67,6 +68,14 @@ impl Ball {
 
         return corner_distance_sq <= (self.radius^2) as u32;
     }
+
+    pub fn get_angle_from_collision_with(self, racket: &Racket) -> f64 {
+
+        // distance between the ball and the middle of the racket.
+        let d = racket.pos_y + (racket.height / 2) as i32 - self.pos_y;
+
+        return (d as f64 / (racket.height as f64 / 2.0)) * 90.0;
+    }
 }
 
 pub struct Racket {
@@ -99,7 +108,7 @@ pub fn initialize_game_state() -> GameState {
             WINDOW_HEIGHT as i32 / 2,
             10,
             Vector2D::new(1.0, 0.0),
-            1.0,
+            BALL_SPEED,
             Color::RGB(255,140,0),
         ),
         racket_1: initialize_racket(

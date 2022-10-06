@@ -60,13 +60,16 @@ fn game_loop(context: &sdl2::Sdl,
 
         gs.ball.update_position();
 
-        
-        if gs.ball.has_collision_with(&gs.racket_1) ||
-            gs.ball.has_collision_with(&gs.racket_2) {
-                println!("collision occured!!");
-                gs.ball.inverse_direction();
-            }
-        
+        if gs.ball.has_collision_with(&gs.racket_1) {
+            println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_1));
+            gs.ball.inverse_direction();
+        }
+
+        if gs.ball.has_collision_with(&gs.racket_2) {
+            println!("collision angle {}", gs.ball.get_angle_from_collision_with(&gs.racket_2));
+            gs.ball.inverse_direction();
+        }
+
         // draw the game
         canvas.set_draw_color(Color::BLACK);
         canvas.clear();
