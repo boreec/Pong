@@ -11,6 +11,7 @@ const RACKET_WIDTH: u32 = 10;
 const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 8;
 
 use sdl2::pixels::Color;
+use rand::random;
 
 #[derive(Copy, Clone, PartialEq)]
 pub enum Direction {
@@ -37,9 +38,14 @@ impl GameState {
     pub fn reset_positions(&mut self){
         self.ball.pos_x = (WINDOW_WIDTH / 2) as i32;
         self.ball.pos_y = (WINDOW_HEIGHT / 2) as i32;
-        self.ball.direction = Direction::EAST;
         self.racket_1.pos_y = (WINDOW_HEIGHT / 2 - self.racket_1.height / 2) as i32;
         self.racket_2.pos_y = (WINDOW_HEIGHT / 2 - self.racket_2.height / 2) as i32;
+
+        if random::<u8>() % 2 == 0 {
+            self.ball.direction = Direction::EAST;
+        }else {
+            self.ball.direction = Direction::WEST;
+        }
     }
 }
 
