@@ -6,7 +6,7 @@ Reproduction of the arcade game.
 
 Use cargo to build/run the project with the following command:
 ```bash
-cargo run --release --features gfx --features ttf
+cargo run --release
 ```
 
 If an error occur, make sure the following packages are installed on the system:
