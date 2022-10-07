@@ -33,6 +33,16 @@ pub struct GameState {
     pub score_p2: u32,
 }
 
+impl GameState {
+    pub fn reset_positions(&mut self){
+        self.ball.pos_x = (WINDOW_WIDTH / 2) as i32;
+        self.ball.pos_y = (WINDOW_HEIGHT / 2) as i32;
+        self.ball.direction = Direction::EAST;
+        self.racket_1.pos_y = (WINDOW_HEIGHT / 2 - self.racket_1.height / 2) as i32;
+        self.racket_2.pos_y = (WINDOW_HEIGHT / 2 - self.racket_2.height / 2) as i32;
+    }
+}
+
 #[derive(Copy, Clone)]
 pub struct Ball {
     pub pos_x: i32,
