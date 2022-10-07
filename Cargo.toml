@@ -9,5 +9,6 @@ edition = "2021"
 sdl2 = "0.35.2"
 
 [features]
+default = ["gfx", "ttf"]
 gfx = ["sdl2/gfx"]
 ttf = ["sdl2/ttf"]
