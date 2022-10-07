@@ -31,12 +31,13 @@ fn draw_ball(ball: &Ball, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>
 
 pub fn draw_halfway_line(canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
     canvas.set_draw_color(Color::WHITE);
-    let middle_x = (WINDOW_WIDTH / 2) as i32;
+    let middle_x = (WINDOW_WIDTH / 2) as i32 - 2;
     let dash_length = WINDOW_HEIGHT as i32 / (HALFWAY_LINE_DASHES * 2);
+    let margin_top = dash_length / 2;
     for i in 0..(HALFWAY_LINE_DASHES * 2) {
         if i % 2 == 0 {
-            let p1 = Point::new(middle_x, i * dash_length);
-            let p2 = Point::new(middle_x, i * dash_length + dash_length);
+            let p1 = Point::new(middle_x, margin_top + i * dash_length);
+            let p2 = Point::new(middle_x, margin_top + i * dash_length + dash_length);
             canvas.draw_line(p1, p2);
         }
     }
