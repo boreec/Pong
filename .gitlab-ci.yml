@@ -8,5 +8,5 @@ before_script:
 compile:
   stage: build
   script:
-    - cargo build --verbose --features gfx
+    - cargo build --verbose --features gfx --features ttf
 
