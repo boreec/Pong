@@ -53,25 +53,24 @@ fn game_loop(context: &sdl2::Sdl,
         }),
     );
     while !gs.is_game_over {
-        handle_game_events(&mut gs, &mut event_pump);
+        handle_game_events(&mut gs, &mut event_pump, canvas); 
+    }
+}
 
-        handle_collisions(&mut gs);
+fn handle_game_events(gs: &mut GameState, event_pump: &mut EventPump, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
+    let event = event_pump.wait_event();
+    if event.is_user_event() {
+        handle_collisions(gs);
 
         gs.ball.update_position();
 
-        update_cpu_racket(&mut gs);
-        // draw the game
+        update_cpu_racket(gs);
+
         canvas.set_draw_color(Color::BLACK);
         canvas.clear();
         draw_game(&gs, canvas);
         canvas.present();
-    }
-}
 
-fn handle_game_events(gs: &mut GameState, event_pump: &mut EventPump){
-    let event = event_pump.wait_event();
-    if event.is_user_event() {
-        //
     }else {
         match event {
             Event::Quit {..} |
