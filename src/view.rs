@@ -48,8 +48,13 @@ pub fn draw_halfway_line(canvas: &mut sdl2::render::Canvas<sdl2::video::Window>)
     }
 }
 
+pub fn draw_score(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
+    // to do
+}
+
 pub fn draw_game(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
     draw_halfway_line(canvas);
+    draw_score(&gs, canvas);
     draw_ball(&gs.ball, canvas);
     draw_racket(&gs.racket_1, canvas);
     draw_racket(&gs.racket_2, canvas);
