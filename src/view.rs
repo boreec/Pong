@@ -10,7 +10,7 @@ use sdl2::pixels::Color;
 use sdl2::rect::Point;
 use sdl2::rect::Rect;
 
-const HALFWAY_LINE_DASHES: i32 = 10;
+const HALFWAY_LINE_DASHES: i32 = 20;
 
 fn draw_racket(racket: &Racket, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
     canvas.set_draw_color(racket.color);
@@ -38,7 +38,12 @@ pub fn draw_halfway_line(canvas: &mut sdl2::render::Canvas<sdl2::video::Window>)
         if i % 2 == 0 {
             let p1 = Point::new(middle_x, margin_top + i * dash_length);
             let p2 = Point::new(middle_x, margin_top + i * dash_length + dash_length);
-            canvas.draw_line(p1, p2);
+            let r = canvas.draw_line(p1, p2);
+            if r.is_err() {
+                panic!("Attempted to draw halfway line dash from {} to {}.",
+                       margin_top + i * dash_length,
+                       margin_top + i * dash_length + dash_length);
+            }
         }
     }
 }
