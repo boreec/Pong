@@ -71,10 +71,10 @@ pub fn draw_score(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video:
         .blended(Color::WHITE)
         .unwrap();
 
-    let rect_width: u32 = WINDOW_WIDTH / 10;
+    let rect_width: u32 = WINDOW_WIDTH / 12;
     let rect_height: u32 = WINDOW_HEIGHT / 10;
-    let font_rect_p1 = Rect::new((WINDOW_WIDTH / 4) as i32, rect_height as i32, rect_width, rect_height);
-    let font_rect_p2 = Rect::new((WINDOW_WIDTH * 3 / 4) as i32, rect_height as i32, rect_width, rect_height);
+    let font_rect_p1 = Rect::new((WINDOW_WIDTH / 4 - rect_width / 2) as i32, rect_height as i32, rect_width, rect_height);
+    let font_rect_p2 = Rect::new((WINDOW_WIDTH * 3 / 4 - rect_width / 2) as i32, rect_height as i32, rect_width, rect_height);
     let texture_p1 = texture_creator.create_texture_from_surface(&surface_p1).unwrap();
     let texture_p2 = texture_creator.create_texture_from_surface(&surface_p2).unwrap();
 
