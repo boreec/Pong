@@ -6,6 +6,8 @@ use crate::entity::Racket;
 use crate::WINDOW_WIDTH;
 use crate::WINDOW_HEIGHT;
 
+use std::path::Path;
+
 use sdl2::pixels::Color;
 use sdl2::rect::Point;
 use sdl2::rect::Rect;
@@ -49,7 +51,26 @@ pub fn draw_halfway_line(canvas: &mut sdl2::render::Canvas<sdl2::video::Window>)
 }
 
 pub fn draw_score(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
-    // to do
+    let ttf_context = sdl2::ttf::init().expect("SDL TTF initialization failed");
+    let texture_creator = canvas.texture_creator();
+
+    let schluber_font_path: &Path = Path::new("font/schluber/Schluber.ttf");
+
+    let result_load_font = ttf_context.load_font(schluber_font_path, 128);
+    if result_load_font.is_err() {
+        panic!("Problem loading font {}", schluber_font_path.display());
+    }
+
+    let font = result_load_font.unwrap();
+    let surface = font
+        .render(&format!("{}", gs.score_p1))
+        .blended(Color::WHITE)
+        .unwrap();
+    let rect_width: u32 = WINDOW_WIDTH / 10;
+    let rect_height: u32 = WINDOW_HEIGHT / 10;
+    let font_rect = Rect::new((rect_width / 2) as i32, rect_height as i32, rect_width, rect_height);
+    let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
+    canvas.copy(&texture, None, font_rect).unwrap();
 }
 
 pub fn draw_game(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
