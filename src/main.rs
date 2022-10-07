@@ -53,7 +53,8 @@ fn game_loop(context: &sdl2::Sdl,
         }),
     );
     while !gs.is_game_over {
-        handle_game_events(&mut gs, &mut event_pump, canvas); 
+        handle_game_events(&mut gs, &mut event_pump, canvas);
+        handle_ball_out_of_border(&mut gs);
     }
 }
 
@@ -117,6 +118,23 @@ fn handle_collisions(gs: &mut GameState){
         }else {
             gs.ball.direction = Direction::NORTHEAST;
         }
+    }
+}
+
+fn handle_ball_out_of_border(gs: &mut GameState){
+    if gs.ball.pos_x < 0 {
+        gs.score_p2 += 1;
+        println!("p2 scored!, total: {}-{}", gs.score_p1, gs.score_p2);
+        gs.ball.pos_x = WINDOW_WIDTH as i32 / 2;
+        gs.ball.pos_y = WINDOW_HEIGHT as i32 / 2;
+        gs.ball.direction = Direction::WEST;
+    }
+    else if gs.ball.pos_x > WINDOW_WIDTH as i32 {
+        gs.score_p1 += 1;
+        println!("p1 score!, total: {}-{}", gs.score_p1, gs.score_p2);
+        gs.ball.pos_x = WINDOW_WIDTH as i32 / 2;
+        gs.ball.pos_y = WINDOW_HEIGHT as i32 / 2;
+        gs.ball.direction = Direction::EAST;
     }
 }
 
