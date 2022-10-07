@@ -10,3 +10,4 @@ sdl2 = "0.35.2"
 
 [features]
 gfx = ["sdl2/gfx"]
+ttf = ["sdl2/ttf"]
