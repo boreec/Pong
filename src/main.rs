@@ -59,16 +59,7 @@ fn game_loop(context: &sdl2::Sdl,
 
         gs.ball.update_position();
 
-        if gs.ball.direction == Direction::SOUTH ||
-            gs.ball.direction == Direction::SOUTHWEST ||
-            gs.ball.direction == Direction::SOUTHEAST {
-                gs.racket_2.pos_y += gs.ball.speed;
-            }
-        if gs.ball.direction == Direction::NORTH ||
-            gs.ball.direction == Direction::NORTHEAST ||
-            gs.ball.direction == Direction::NORTHWEST {
-                gs.racket_2.pos_y -= gs.ball.speed;
-            }
+        update_cpu_racket(&mut gs);
         // draw the game
         canvas.set_draw_color(Color::BLACK);
         canvas.clear();
@@ -128,4 +119,17 @@ fn handle_collisions(gs: &mut GameState){
             gs.ball.direction = Direction::NORTHEAST;
         }
     }
+}
+
+fn update_cpu_racket(gs: &mut GameState) {
+    if gs.ball.direction == Direction::SOUTH ||
+        gs.ball.direction == Direction::SOUTHWEST ||
+        gs.ball.direction == Direction::SOUTHEAST {
+            gs.racket_2.pos_y += gs.ball.speed;
+        }
+    if gs.ball.direction == Direction::NORTH ||
+        gs.ball.direction == Direction::NORTHEAST ||
+        gs.ball.direction == Direction::NORTHWEST {
+            gs.racket_2.pos_y -= gs.ball.speed;
+        }
 }
