@@ -62,15 +62,25 @@ pub fn draw_score(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video:
     }
 
     let font = result_load_font.unwrap();
-    let surface = font
+    let surface_p1 = font
         .render(&format!("{}", gs.score_p1))
         .blended(Color::WHITE)
         .unwrap();
+    let surface_p2 = font
+        .render(&format!("{}", gs.score_p2))
+        .blended(Color::WHITE)
+        .unwrap();
+
     let rect_width: u32 = WINDOW_WIDTH / 10;
     let rect_height: u32 = WINDOW_HEIGHT / 10;
-    let font_rect = Rect::new((rect_width / 2) as i32, rect_height as i32, rect_width, rect_height);
-    let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
-    canvas.copy(&texture, None, font_rect).unwrap();
+    let font_rect_p1 = Rect::new((WINDOW_WIDTH / 4) as i32, rect_height as i32, rect_width, rect_height);
+    let font_rect_p2 = Rect::new((WINDOW_WIDTH * 3 / 4) as i32, rect_height as i32, rect_width, rect_height);
+    let texture_p1 = texture_creator.create_texture_from_surface(&surface_p1).unwrap();
+    let texture_p2 = texture_creator.create_texture_from_surface(&surface_p2).unwrap();
+
+    canvas.copy(&texture_p1, None, font_rect_p1).unwrap();
+    canvas.copy(&texture_p2, None, font_rect_p2).unwrap();
+
 }
 
 pub fn draw_game(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>){
