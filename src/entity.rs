@@ -7,7 +7,7 @@ const RACKET_SPEED: i32 = 10;
 const RACKET_WIDTH: u32 = 10;
 const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 8;
 
-const BALL_SPEED: i32 = 3;
+const BALL_SPEED: i32 = 10;
 
 use sdl2::pixels::Color;
 

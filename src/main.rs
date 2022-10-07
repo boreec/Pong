@@ -124,11 +124,11 @@ fn update_cpu_racket(gs: &mut GameState) {
     if gs.ball.direction == Direction::SOUTH ||
         gs.ball.direction == Direction::SOUTHWEST ||
         gs.ball.direction == Direction::SOUTHEAST {
-            gs.racket_2.pos_y += gs.ball.speed;
+            gs.racket_2.pos_y += gs.racket_2.speed;
         }
     if gs.ball.direction == Direction::NORTH ||
         gs.ball.direction == Direction::NORTHEAST ||
         gs.ball.direction == Direction::NORTHWEST {
-            gs.racket_2.pos_y -= gs.ball.speed;
+            gs.racket_2.pos_y -= gs.racket_2.speed;
         }
 }
