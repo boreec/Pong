@@ -23,3 +23,6 @@ The following controls are available:
 * down arrow key: move the racket downward.
 * ESC key: quit the game.
 * space key: restart the game.
+
+## Images
+![](img/game.png)
