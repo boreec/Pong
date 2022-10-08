@@ -2,6 +2,7 @@
 
 Reproduction of the arcade game.
 
+Here is a video of the game running: https://youtu.be/FyqXscHFBu0
 ## How to execute ?
 
 Use cargo to build/run the project with the following command:
