@@ -3,10 +3,11 @@ use crate::WINDOW_HEIGHT;
 use crate::SCREEN_MARGIN;
 
 // Speed of the ball in terms of pixels/frame.
-const BALL_SPEED: i32 = 10;
+const BALL_INIT_SPEED: i32 = 10;
+const BALL_MAX_SPEED: i32 = 15;
 
 // Set the racket speed as 90% of the ball speed.
-const RACKET_SPEED: i32 = ((BALL_SPEED as f32) * 0.9) as i32;
+const RACKET_SPEED: i32 = ((BALL_INIT_SPEED as f32) * 0.9) as i32;
 const RACKET_WIDTH: u32 = 10;
 const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 8;
 
@@ -38,6 +39,7 @@ impl GameState {
     pub fn reset_positions(&mut self){
         self.ball.pos_x = (WINDOW_WIDTH / 2) as i32;
         self.ball.pos_y = (WINDOW_HEIGHT / 2) as i32;
+        self.ball.speed = BALL_INIT_SPEED;
         self.racket_1.pos_y = (WINDOW_HEIGHT / 2 - self.racket_1.height / 2) as i32;
         self.racket_2.pos_y = (WINDOW_HEIGHT / 2 - self.racket_2.height / 2) as i32;
 
@@ -85,9 +87,6 @@ impl Ball {
         }
     }
 
-    /*
-    * Algorithm based on the answer of e.James on Stackoverflow.
-    */
     pub fn has_collision_with(self, racket: &Racket) -> bool {
 
         let y_collision = self.pos_y + self.radius >= racket.pos_y && self.pos_y - self.radius <= racket.pos_y + racket.height as i32;
@@ -110,6 +109,12 @@ impl Ball {
 
     pub fn has_collision_with_floor(self) -> bool {
         return self.pos_y + self.radius >= WINDOW_HEIGHT as i32;
+    }
+
+    pub fn increase_speed(&mut self){
+        if self.speed < BALL_MAX_SPEED {
+            self.speed += 1;
+        }
     }
 }
 
@@ -143,7 +148,7 @@ pub fn initialize_game_state() -> GameState {
             WINDOW_HEIGHT as i32 / 2,
             10,
             Direction::EAST,
-            BALL_SPEED,
+            BALL_INIT_SPEED,
             Color::RGB(255,140,0),
         ),
         racket_1: initialize_racket(

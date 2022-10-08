@@ -95,6 +95,7 @@ fn handle_collisions(gs: &mut GameState){
         if cp == 0 { gs.ball.direction = Direction::EAST; }
         else if cp > 0 { gs.ball.direction = Direction::SOUTHEAST; }
         else {gs.ball.direction = Direction::NORTHEAST; }
+        gs.ball.increase_speed();
     }
 
     if gs.ball.has_collision_with(&gs.racket_2) {
@@ -102,6 +103,7 @@ fn handle_collisions(gs: &mut GameState){
         if cp == 0 { gs.ball.direction = Direction::WEST; }
         else if cp > 0 { gs.ball.direction = Direction::SOUTHWEST; }
         else { gs.ball.direction = Direction::NORTHWEST; }
+        gs.ball.increase_speed();
     }
 
     if gs.ball.has_collision_with_ceiling() {
