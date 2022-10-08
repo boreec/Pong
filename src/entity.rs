@@ -31,6 +31,7 @@ pub struct GameState {
     pub racket_1: Racket,
     pub racket_2: Racket,
     pub is_game_over: bool,
+    pub is_game_restarted: bool,
     pub score_p1: u32,
     pub score_p2: u32,
 }
@@ -168,6 +169,7 @@ pub fn initialize_game_state() -> GameState {
             Color::WHITE
         ),
         is_game_over: false,
+        is_game_restarted: false,
         score_p1: 0,
         score_p2: 0,
     };

@@ -39,7 +39,7 @@ pub fn main() {
 fn game_loop(context: &sdl2::Sdl,
              canvas: &mut sdl2::render::Canvas<sdl2::video::Window>) {
 
-    let mut gs: GameState = initialize_game_state();
+    let mut gs: GameState;
     let mut event_pump = context.event_pump().unwrap();
     let ev = context.event().unwrap();
     ev.register_custom_event::<FrameEvent>().unwrap();
@@ -52,9 +52,15 @@ fn game_loop(context: &sdl2::Sdl,
             FRAME_DURATION
         }),
     );
-    while !gs.is_game_over {
-        handle_game_events(&mut gs, &mut event_pump, canvas);
-        handle_ball_out_of_border(&mut gs);
+    'game_loop: loop {
+        gs = initialize_game_state();
+        while !gs.is_game_over && !gs.is_game_restarted {
+            handle_game_events(&mut gs, &mut event_pump, canvas);
+            handle_ball_out_of_border(&mut gs); 
+        }
+        if !gs.is_game_restarted {
+            break 'game_loop;
+        }
     }
 }
 
@@ -83,6 +89,9 @@ fn handle_game_events(gs: &mut GameState, event_pump: &mut EventPump, canvas: &m
             },
             Event::KeyDown { keycode: Some(Keycode::Down), .. } => {
                 gs.racket_1.move_down();
+            },
+            Event::KeyDown { keycode: Some(Keycode::Space), .. } => {
+                gs.is_game_restarted = true;
             },
             _ => {}
         }
