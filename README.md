@@ -3,6 +3,10 @@
 Reproduction of the arcade game.
 
 Here is a video of the game running: https://youtu.be/FyqXscHFBu0
+
+Find more of my projects on:
+https://boreec.fr/projects/
+
 ## How to execute ?
 
 Use cargo to build/run the project with the following command:
