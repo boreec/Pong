@@ -14,6 +14,7 @@ use sdl2::rect::Rect;
 
 const HALFWAY_LINE_DASHES: i32 = 20;
 
+/// Draw a racket object on the screen.
 fn draw_racket(racket: &Racket, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>) {
     canvas.set_draw_color(racket.color);
     let rectangle: Rect = Rect::new(racket.pos_x, racket.pos_y, racket.width, racket.height);
@@ -23,6 +24,7 @@ fn draw_racket(racket: &Racket, canvas: &mut sdl2::render::Canvas<sdl2::video::W
     }
 }
 
+/// Draw a ball object on the screen.
 fn draw_ball(ball: &Ball, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>) {
     canvas.set_draw_color(ball.color);
     let r = canvas.filled_circle(
@@ -36,6 +38,7 @@ fn draw_ball(ball: &Ball, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>
     }
 }
 
+/// Draw the line separating the two players at the middle of the screen.
 pub fn draw_halfway_line(canvas: &mut sdl2::render::Canvas<sdl2::video::Window>) {
     canvas.set_draw_color(Color::WHITE);
     let middle_x = (WINDOW_WIDTH / 2) as i32 - 2;
@@ -56,6 +59,7 @@ pub fn draw_halfway_line(canvas: &mut sdl2::render::Canvas<sdl2::video::Window>)
     }
 }
 
+/// Draw the score for the two players.
 pub fn draw_score(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>) {
     let ttf_context = sdl2::ttf::init().expect("SDL TTF initialization failed");
     let texture_creator = canvas.texture_creator();
@@ -102,6 +106,7 @@ pub fn draw_score(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video:
     canvas.copy(&texture_p2, None, font_rect_p2).unwrap();
 }
 
+/// Draw all elements for the game.
 pub fn draw_game(gs: &GameState, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>) {
     draw_halfway_line(canvas);
     draw_score(&gs, canvas);
