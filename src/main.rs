@@ -51,7 +51,7 @@ fn game_loop(context: &sdl2::Sdl, canvas: &mut sdl2::render::Canvas<sdl2::video:
         }),
     );
     'game_loop: loop {
-        gs = initialize_game_state();
+        gs = GameState::new();
         while !gs.is_game_over && !gs.is_game_restarted {
             handle_game_events(&mut gs, &mut event_pump, canvas);
             handle_ball_out_of_border(&mut gs);

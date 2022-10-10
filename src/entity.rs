@@ -37,6 +37,40 @@ pub struct GameState {
 }
 
 impl GameState {
+
+    pub fn new() -> GameState {
+        return GameState {
+            ball: Ball::new(
+                WINDOW_WIDTH as i32 / 2,
+                WINDOW_HEIGHT as i32 / 2,
+                10,
+                Direction::EAST,
+                BALL_INIT_SPEED,
+                Color::RGB(255, 140, 0),
+            ),
+            racket_1: Racket::new(
+                SCREEN_MARGIN,
+                (WINDOW_HEIGHT / 2 - RACKET_HEIGHT / 2) as i32,
+                RACKET_HEIGHT,
+                RACKET_WIDTH,
+                RACKET_SPEED,
+                Color::WHITE,
+            ),
+            racket_2: Racket::new(
+                WINDOW_WIDTH as i32 - SCREEN_MARGIN - RACKET_WIDTH as i32,
+                (WINDOW_HEIGHT / 2 - RACKET_HEIGHT / 2) as i32,
+                RACKET_HEIGHT,
+                RACKET_WIDTH,
+                RACKET_SPEED,
+                Color::WHITE,
+            ),
+            is_game_over: false,
+            is_game_restarted: false,
+            score_p1: 0,
+            score_p2: 0,
+        };
+    }
+
     pub fn reset_positions(&mut self) {
         self.ball.pos_x = (WINDOW_WIDTH / 2) as i32;
         self.ball.pos_y = (WINDOW_HEIGHT / 2) as i32;
@@ -177,37 +211,4 @@ impl Racket {
             self.pos_y = self.pos_y + self.speed;
         }
     }
-}
-
-pub fn initialize_game_state() -> GameState {
-    return GameState {
-        ball: Ball::new(
-            WINDOW_WIDTH as i32 / 2,
-            WINDOW_HEIGHT as i32 / 2,
-            10,
-            Direction::EAST,
-            BALL_INIT_SPEED,
-            Color::RGB(255, 140, 0),
-        ),
-        racket_1: Racket::new(
-            SCREEN_MARGIN,
-            (WINDOW_HEIGHT / 2 - RACKET_HEIGHT / 2) as i32,
-            RACKET_HEIGHT,
-            RACKET_WIDTH,
-            RACKET_SPEED,
-            Color::WHITE,
-        ),
-        racket_2: Racket::new(
-            WINDOW_WIDTH as i32 - SCREEN_MARGIN - RACKET_WIDTH as i32,
-            (WINDOW_HEIGHT / 2 - RACKET_HEIGHT / 2) as i32,
-            RACKET_HEIGHT,
-            RACKET_WIDTH,
-            RACKET_SPEED,
-            Color::WHITE,
-        ),
-        is_game_over: false,
-        is_game_restarted: false,
-        score_p1: 0,
-        score_p2: 0,
-    };
 }
