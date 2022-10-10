@@ -14,6 +14,7 @@ const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 8;
 use rand::random;
 use sdl2::pixels::Color;
 
+/// Enum variants for every direction the ball can take.
 #[derive(Copy, Clone, PartialEq)]
 pub enum Direction {
     NORTH,
@@ -26,6 +27,7 @@ pub enum Direction {
     SOUTHEAST,
 }
 
+/// Data structure representing the state of the game at any point.
 pub struct GameState {
     pub ball: Ball,
     pub racket_1: Racket,
@@ -38,6 +40,7 @@ pub struct GameState {
 
 impl GameState {
 
+    /// Create a new GameState object.
     pub fn new() -> GameState {
         return GameState {
             ball: Ball::new(
@@ -71,6 +74,7 @@ impl GameState {
         };
     }
 
+    /// Set the positions and speeds of all objects for a new game.
     pub fn reset_positions(&mut self) {
         self.ball.pos_x = (WINDOW_WIDTH / 2) as i32;
         self.ball.pos_y = (WINDOW_HEIGHT / 2) as i32;
@@ -86,6 +90,7 @@ impl GameState {
     }
 }
 
+/// Data structure representing the ball.
 #[derive(Copy, Clone)]
 pub struct Ball {
     pub pos_x: i32,
@@ -97,6 +102,8 @@ pub struct Ball {
 }
 
 impl Ball {
+
+    /// Create a new ball object.
     pub fn new(x: i32, y: i32, r: i32, dir: Direction, speed: i32, color: Color) -> Ball {
         return Ball {
             pos_x: x,
@@ -108,7 +115,7 @@ impl Ball {
         };
     }
 
-
+    /// Update the ball's coordinates depending on its direction.
     pub fn update_position(&mut self) {
         match self.direction {
             Direction::NORTH => {
@@ -142,6 +149,7 @@ impl Ball {
         }
     }
 
+    /// Check if the ball collides with a racket.
     pub fn has_collision_with(self, racket: &Racket) -> bool {
         let y_collision = self.pos_y + self.radius >= racket.pos_y
             && self.pos_y - self.radius <= racket.pos_y + racket.height as i32;
@@ -153,6 +161,7 @@ impl Ball {
         return x_left_collision && y_collision || x_right_collision && y_collision;
     }
 
+    /// Give which part of aracket is hit by the ball.
     pub fn collision_point_with(self, racket: &Racket) -> i32 {
         if self.pos_y == racket.pos_y + racket.height as i32 / 2 {
             return 0;
@@ -164,14 +173,17 @@ impl Ball {
         };
     }
 
+    /// Check if the ball intersects the top of the screen.
     pub fn has_collision_with_ceiling(self) -> bool {
         return self.pos_y - self.radius <= 0;
     }
 
+    /// Check if the ball intersects the bottom of the screen.
     pub fn has_collision_with_floor(self) -> bool {
         return self.pos_y + self.radius >= WINDOW_HEIGHT as i32;
     }
 
+    /// Increase the ball's speed by 1 as long as it does not exceed a limit.
     pub fn increase_speed(&mut self) {
         if self.speed < BALL_MAX_SPEED {
             self.speed += 1;
@@ -179,6 +191,7 @@ impl Ball {
     }
 }
 
+/// Data structure representing the rackets (left or right).
 pub struct Racket {
     pub pos_x: i32,
     pub pos_y: i32,
@@ -189,6 +202,8 @@ pub struct Racket {
 }
 
 impl Racket {
+
+    /// Create a new racket object.
     pub fn new(x: i32, y: i32, h: u32, w: u32, speed: i32, color: Color) -> Racket {
         return Racket {
             pos_x: x,
@@ -200,12 +215,14 @@ impl Racket {
         };
     }
 
+    /// Move the racket upward (on the screen).
     pub fn move_up(&mut self) {
         if self.pos_y > 0 {
             self.pos_y = self.pos_y - self.speed;
         }
     }
 
+    /// Move the racket downward (on the screen).
     pub fn move_down(&mut self) {
         if self.pos_y < (WINDOW_HEIGHT - self.height) as i32 {
             self.pos_y = self.pos_y + self.speed;
