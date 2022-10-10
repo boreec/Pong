@@ -36,6 +36,7 @@ pub fn main() {
     game_loop(&sdl_context, &mut canvas);
 }
 
+/// This function contains the main loop of the game.
 fn game_loop(context: &sdl2::Sdl, canvas: &mut sdl2::render::Canvas<sdl2::video::Window>) {
     let mut gs: GameState;
     let mut event_pump = context.event_pump().unwrap();
@@ -153,6 +154,7 @@ fn handle_collisions(gs: &mut GameState) {
     }
 }
 
+/// Check if the ball scores and update the corresponding player's score.
 fn handle_ball_out_of_border(gs: &mut GameState) {
     if gs.ball.pos_x < 0 {
         gs.score_p2 += 1;
@@ -165,6 +167,7 @@ fn handle_ball_out_of_border(gs: &mut GameState) {
     }
 }
 
+/// Manage the movement of the IA racket depending on the game state.
 fn update_cpu_racket(gs: &mut GameState) {
     if gs.ball.direction == Direction::SOUTH
         || gs.ball.direction == Direction::SOUTHWEST
