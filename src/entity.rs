@@ -63,6 +63,18 @@ pub struct Ball {
 }
 
 impl Ball {
+    pub fn new(x: i32, y: i32, r: i32, d: Direction, s: i32, c: Color) -> Ball {
+        return Ball {
+            pos_x: x,
+            pos_y: y,
+            radius: r,
+            direction: d,
+            speed: s,
+            color: c,
+        };
+    }
+
+
     pub fn update_position(&mut self) {
         match self.direction {
             Direction::NORTH => {
@@ -158,7 +170,7 @@ impl Racket {
 
 pub fn initialize_game_state() -> GameState {
     return GameState {
-        ball: initialize_ball(
+        ball: Ball::new(
             WINDOW_WIDTH as i32 / 2,
             WINDOW_HEIGHT as i32 / 2,
             10,
@@ -195,17 +207,6 @@ pub fn initialize_racket(x: i32, y: i32, h: u32, w: u32, s: i32, c: Color) -> Ra
         pos_y: y,
         height: h,
         width: w,
-        speed: s,
-        color: c,
-    };
-}
-
-pub fn initialize_ball(x: i32, y: i32, r: i32, d: Direction, s: i32, c: Color) -> Ball {
-    return Ball {
-        pos_x: x,
-        pos_y: y,
-        radius: r,
-        direction: d,
         speed: s,
         color: c,
     };
