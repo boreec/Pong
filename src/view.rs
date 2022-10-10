@@ -41,18 +41,17 @@ pub fn draw_halfway_line(canvas: &mut sdl2::render::Canvas<sdl2::video::Window>)
     let middle_x = (WINDOW_WIDTH / 2) as i32 - 2;
     let dash_length = WINDOW_HEIGHT as i32 / (HALFWAY_LINE_DASHES * 2);
     let margin_top = dash_length / 2;
-    for i in 0..(HALFWAY_LINE_DASHES * 2) {
-        if i % 2 == 0 {
-            let p1 = Point::new(middle_x, margin_top + i * dash_length);
-            let p2 = Point::new(middle_x, margin_top + i * dash_length + dash_length);
-            let r = canvas.draw_line(p1, p2);
-            if r.is_err() {
-                panic!(
-                    "Attempted to draw halfway line dash from {} to {}.",
-                    margin_top + i * dash_length,
-                    margin_top + i * dash_length + dash_length
-                );
-            }
+
+    for i in (0..HALFWAY_LINE_DASHES * 2).step_by(2) {
+        let p1 = Point::new(middle_x, margin_top + i * dash_length);
+        let p2 = Point::new(middle_x, margin_top + i * dash_length + dash_length);
+        let r = canvas.draw_line(p1, p2);
+        if r.is_err() {
+            panic!(
+                "Attempted to draw halfway line dash from {} to {}.",
+                margin_top + i * dash_length,
+                margin_top + i * dash_length + dash_length
+            );
         }
     }
 }
