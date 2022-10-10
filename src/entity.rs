@@ -155,6 +155,17 @@ pub struct Racket {
 }
 
 impl Racket {
+    pub fn new(x: i32, y: i32, h: u32, w: u32, s: i32, c: Color) -> Racket {
+        return Racket {
+            pos_x: x,
+            pos_y: y,
+            height: h,
+            width: w,
+            speed: s,
+            color: c,
+        };
+    }
+
     pub fn move_up(&mut self) {
         if self.pos_y > 0 {
             self.pos_y = self.pos_y - self.speed;
@@ -178,7 +189,7 @@ pub fn initialize_game_state() -> GameState {
             BALL_INIT_SPEED,
             Color::RGB(255, 140, 0),
         ),
-        racket_1: initialize_racket(
+        racket_1: Racket::new(
             SCREEN_MARGIN,
             (WINDOW_HEIGHT / 2 - RACKET_HEIGHT / 2) as i32,
             RACKET_HEIGHT,
@@ -186,7 +197,7 @@ pub fn initialize_game_state() -> GameState {
             RACKET_SPEED,
             Color::WHITE,
         ),
-        racket_2: initialize_racket(
+        racket_2: Racket::new(
             WINDOW_WIDTH as i32 - SCREEN_MARGIN - RACKET_WIDTH as i32,
             (WINDOW_HEIGHT / 2 - RACKET_HEIGHT / 2) as i32,
             RACKET_HEIGHT,
@@ -198,16 +209,5 @@ pub fn initialize_game_state() -> GameState {
         is_game_restarted: false,
         score_p1: 0,
         score_p2: 0,
-    };
-}
-
-pub fn initialize_racket(x: i32, y: i32, h: u32, w: u32, s: i32, c: Color) -> Racket {
-    return Racket {
-        pos_x: x,
-        pos_y: y,
-        height: h,
-        width: w,
-        speed: s,
-        color: c,
     };
 }
