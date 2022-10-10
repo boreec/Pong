@@ -1,6 +1,6 @@
-use crate::WINDOW_WIDTH;
-use crate::WINDOW_HEIGHT;
 use crate::SCREEN_MARGIN;
+use crate::WINDOW_HEIGHT;
+use crate::WINDOW_WIDTH;
 
 // Speed of the ball in terms of pixels/frame.
 const BALL_INIT_SPEED: i32 = 10;
@@ -11,8 +11,8 @@ const RACKET_SPEED: i32 = ((BALL_INIT_SPEED as f32) * 0.9) as i32;
 const RACKET_WIDTH: u32 = 10;
 const RACKET_HEIGHT: u32 = WINDOW_HEIGHT / 8;
 
-use sdl2::pixels::Color;
 use rand::random;
+use sdl2::pixels::Color;
 
 #[derive(Copy, Clone, PartialEq)]
 pub enum Direction {
@@ -37,7 +37,7 @@ pub struct GameState {
 }
 
 impl GameState {
-    pub fn reset_positions(&mut self){
+    pub fn reset_positions(&mut self) {
         self.ball.pos_x = (WINDOW_WIDTH / 2) as i32;
         self.ball.pos_y = (WINDOW_HEIGHT / 2) as i32;
         self.ball.speed = BALL_INIT_SPEED;
@@ -46,7 +46,7 @@ impl GameState {
 
         if random::<u8>() % 2 == 0 {
             self.ball.direction = Direction::EAST;
-        }else {
+        } else {
             self.ball.direction = Direction::WEST;
         }
     }
@@ -65,10 +65,18 @@ pub struct Ball {
 impl Ball {
     pub fn update_position(&mut self) {
         match self.direction {
-            Direction::NORTH => { self.pos_y -= self.speed; }
-            Direction::SOUTH => { self.pos_y += self.speed; }
-            Direction::WEST => { self.pos_x -= self.speed; }
-            Direction::EAST => { self.pos_x += self.speed; }
+            Direction::NORTH => {
+                self.pos_y -= self.speed;
+            }
+            Direction::SOUTH => {
+                self.pos_y += self.speed;
+            }
+            Direction::WEST => {
+                self.pos_x -= self.speed;
+            }
+            Direction::EAST => {
+                self.pos_x += self.speed;
+            }
             Direction::NORTHEAST => {
                 self.pos_x += self.speed;
                 self.pos_y -= self.speed;
@@ -89,19 +97,25 @@ impl Ball {
     }
 
     pub fn has_collision_with(self, racket: &Racket) -> bool {
+        let y_collision = self.pos_y + self.radius >= racket.pos_y
+            && self.pos_y - self.radius <= racket.pos_y + racket.height as i32;
+        let x_left_collision = self.pos_x + self.radius >= racket.pos_x
+            && self.pos_x + self.radius <= racket.pos_x + racket.width as i32;
+        let x_right_collision = self.pos_x - self.radius <= racket.pos_x + racket.width as i32
+            && self.pos_x - self.radius >= racket.pos_x;
 
-        let y_collision = self.pos_y + self.radius >= racket.pos_y && self.pos_y - self.radius <= racket.pos_y + racket.height as i32;
-        let x_left_collision = self.pos_x + self.radius >= racket.pos_x && self.pos_x + self.radius <= racket.pos_x + racket.width as i32;
-        let x_right_collision = self.pos_x - self.radius <= racket.pos_x + racket.width as i32 && self.pos_x - self.radius >= racket.pos_x;
-
-        return  x_left_collision && y_collision || x_right_collision && y_collision;
+        return x_left_collision && y_collision || x_right_collision && y_collision;
     }
 
     pub fn collision_point_with(self, racket: &Racket) -> i32 {
         if self.pos_y == racket.pos_y + racket.height as i32 / 2 {
             return 0;
         }
-        return if self.pos_y > racket.pos_y + racket.height as i32 / 2  { 1 } else { - 1 };
+        return if self.pos_y > racket.pos_y + racket.height as i32 / 2 {
+            1
+        } else {
+            -1
+        };
     }
 
     pub fn has_collision_with_ceiling(self) -> bool {
@@ -112,7 +126,7 @@ impl Ball {
         return self.pos_y + self.radius >= WINDOW_HEIGHT as i32;
     }
 
-    pub fn increase_speed(&mut self){
+    pub fn increase_speed(&mut self) {
         if self.speed < BALL_MAX_SPEED {
             self.speed += 1;
         }
@@ -129,13 +143,13 @@ pub struct Racket {
 }
 
 impl Racket {
-    pub fn move_up(&mut self){
+    pub fn move_up(&mut self) {
         if self.pos_y > 0 {
             self.pos_y = self.pos_y - self.speed;
         }
     }
 
-    pub fn move_down(&mut self){
+    pub fn move_down(&mut self) {
         if self.pos_y < (WINDOW_HEIGHT - self.height) as i32 {
             self.pos_y = self.pos_y + self.speed;
         }
@@ -150,23 +164,23 @@ pub fn initialize_game_state() -> GameState {
             10,
             Direction::EAST,
             BALL_INIT_SPEED,
-            Color::RGB(255,140,0),
+            Color::RGB(255, 140, 0),
         ),
         racket_1: initialize_racket(
             SCREEN_MARGIN,
-            (WINDOW_HEIGHT / 2  - RACKET_HEIGHT / 2) as i32,
+            (WINDOW_HEIGHT / 2 - RACKET_HEIGHT / 2) as i32,
             RACKET_HEIGHT,
             RACKET_WIDTH,
             RACKET_SPEED,
-            Color::WHITE
+            Color::WHITE,
         ),
         racket_2: initialize_racket(
             WINDOW_WIDTH as i32 - SCREEN_MARGIN - RACKET_WIDTH as i32,
-            (WINDOW_HEIGHT / 2  - RACKET_HEIGHT / 2) as i32,
+            (WINDOW_HEIGHT / 2 - RACKET_HEIGHT / 2) as i32,
             RACKET_HEIGHT,
             RACKET_WIDTH,
             RACKET_SPEED,
-            Color::WHITE
+            Color::WHITE,
         ),
         is_game_over: false,
         is_game_restarted: false,
@@ -196,4 +210,3 @@ pub fn initialize_ball(x: i32, y: i32, r: i32, d: Direction, s: i32, c: Color) -
         color: c,
     };
 }
-
