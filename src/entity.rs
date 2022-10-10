@@ -97,14 +97,14 @@ pub struct Ball {
 }
 
 impl Ball {
-    pub fn new(x: i32, y: i32, r: i32, d: Direction, s: i32, c: Color) -> Ball {
+    pub fn new(x: i32, y: i32, r: i32, dir: Direction, speed: i32, color: Color) -> Ball {
         return Ball {
             pos_x: x,
             pos_y: y,
             radius: r,
-            direction: d,
-            speed: s,
-            color: c,
+            direction: dir,
+            speed: speed,
+            color: color,
         };
     }
 
@@ -189,14 +189,14 @@ pub struct Racket {
 }
 
 impl Racket {
-    pub fn new(x: i32, y: i32, h: u32, w: u32, s: i32, c: Color) -> Racket {
+    pub fn new(x: i32, y: i32, h: u32, w: u32, speed: i32, color: Color) -> Racket {
         return Racket {
             pos_x: x,
             pos_y: y,
             height: h,
             width: w,
-            speed: s,
-            color: c,
+            speed: speed,
+            color: color,
         };
     }
 
