@@ -1,3 +1,5 @@
+warning: this repository is a backup mirror for https://gitlab.com/boreec/pong
+
 # Pong
 
 Reproduction of the arcade game.
